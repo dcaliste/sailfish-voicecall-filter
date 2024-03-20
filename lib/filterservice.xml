@@ -1,0 +1,15 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.sailfishos.voicecallfilter">
+    <signal name="requestFiltering">
+      <arg name="id" type="u" direction="out"/>
+      <arg name="incomingNumber" type="s" direction="out"/>
+    </signal>
+    <method name="filter">
+      <arg name="id" type="u" direction="in"/>
+      <arg name="action" type="u" direction="in"/>
+      <annotation name="org.freedesktop.DBus.Method.NoReply" value="true"/>
+<!--      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="VoiceCallFilter::Action"/>-->
+    </method>
+  </interface>
+</node>

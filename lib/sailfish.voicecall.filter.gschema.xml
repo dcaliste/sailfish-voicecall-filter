@@ -1,0 +1,11 @@
+<schemalist>
+  <schema id="sailfish.voicecall.filter"
+          path="/sailfish/voicecall/filter/">
+    <key name="ignored-numbers" type="as">
+      <default>[]</default>
+    </key>
+    <key name="blocked-numbers" type="as">
+      <default>[]</default>
+    </key>
+  </schema>
+</schemalist>
