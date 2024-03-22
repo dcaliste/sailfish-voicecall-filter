@@ -25,6 +25,7 @@
 #include <ofono/gdbus.h>
 #include <ofono/log.h>
 #include <ofono/misc.h>
+#include <ofono/modem.h>
 
 #include "filterservice.h"
 
@@ -60,6 +61,7 @@ static unsigned int _incoming(struct ofono_voicecall *vc,
     id = service_request(_service, cb, data);
     if (id) {
         dbus_uint32_t dbusId = id;
+	const char *path = ofono_modem_get_path(ofono_voicecall_get_modem(vc));
         const char *number = buffer;
         DBG("voicecall-filter: emitting a new request (%d).", id);
         if (g_dbus_emit_signal(ofono_dbus_get_connection(),
@@ -67,6 +69,7 @@ static unsigned int _incoming(struct ofono_voicecall *vc,
                                "org.sailfishos.voicecallfilter",
                                "requestFiltering",
                                DBUS_TYPE_UINT32, &dbusId,
+                               DBUS_TYPE_OBJECT_PATH, &path,
                                DBUS_TYPE_STRING, &number,
                                DBUS_TYPE_INVALID)) {
             g_timeout_add(1500, _timeout, GUINT_TO_POINTER(id));
@@ -107,7 +110,9 @@ static const GDBusMethodTable _methods[] = {
 
 static const GDBusSignalTable _signals[] = {
 	{ GDBUS_SIGNAL("requestFiltering",
-			GDBUS_ARGS({ "id", "u" }, { "incomingNumber", "s" })) },
+			GDBUS_ARGS({ "id", "u" },
+                                   { "modemPath", "o" },
+                                   { "incomingNumber", "s" })) },
 	{ }
 };
 

@@ -3,6 +3,7 @@
   <interface name="org.sailfishos.voicecallfilter">
     <signal name="requestFiltering">
       <arg name="id" type="u" direction="out"/>
+      <arg name="modemPath" type="o" direction="out"/>
       <arg name="incomingNumber" type="s" direction="out"/>
     </signal>
     <method name="filter">

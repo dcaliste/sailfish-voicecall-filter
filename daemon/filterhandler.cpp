@@ -43,8 +43,9 @@ FilterHandler::~FilterHandler()
 {
 }
 
-void FilterHandler::onFilterRequest(uint id, const QString &incomingNumber)
+void FilterHandler::onFilterRequest(uint id, const QDBusObjectPath &modemPath,
+                                    const QString &incomingNumber)
 {
-    qDebug() << "filter request" << id << incomingNumber;
+    qDebug() << "filter request" << id << modemPath.path() << incomingNumber;
     m_interface->filter(id, m_filter->evaluate(incomingNumber));
 }

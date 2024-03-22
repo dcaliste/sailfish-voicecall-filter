@@ -23,6 +23,7 @@
 #define FILTERHANDLER_H
 
 #include <QObject>
+#include <QDBusObjectPath>
 
 namespace VoiceCallFilter {
     class Filter;
@@ -36,9 +37,11 @@ public:
     FilterHandler(QObject *parent = nullptr);
     ~FilterHandler();
 
-private:
-    void onFilterRequest(uint id, const QString &incomingNumber);
+private slots:
+    void onFilterRequest(uint id, const QDBusObjectPath &modemPath,
+                         const QString &incomingNumber);
 
+private:
     OrgSailfishosVoicecallfilterInterface *m_interface;
     VoiceCallFilter::Filter *m_filter;
 };
