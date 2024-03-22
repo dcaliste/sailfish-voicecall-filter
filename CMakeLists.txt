@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(sailfish-voicecall-filter
-	VERSION 0.1
+	VERSION 0.1.1
 	DESCRIPTION "A voice call filter for Sailfish OS")
 
 set(CMAKE_AUTOMOC ON)

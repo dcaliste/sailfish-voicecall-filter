@@ -4,7 +4,7 @@ Requires=booster-qt5.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/invoker -o --type=qt5 --global-syms /usr/bin/voicecallfilterd
+ExecStart=/usr/bin/invoker -o --type=generic /usr/bin/voicecallfilterd
 Restart=on-failure
 RestartSec=1
 

@@ -1,5 +1,5 @@
 Name: sailfish-voicecall-filter
-Version: 0.1
+Version: 0.1.1
 Release: 1
 Summary: a voicecall filter plugin for Sailfish OS
 License: GPLv2
