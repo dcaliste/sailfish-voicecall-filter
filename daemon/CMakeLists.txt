@@ -13,6 +13,7 @@ target_link_libraries(voicecallfilterd
   PRIVATE
   Qt5::Core
   Qt5::DBus
+  PkgConfig::COMM
   voicecallfilter
   )
 

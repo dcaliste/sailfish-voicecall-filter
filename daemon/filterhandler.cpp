@@ -23,6 +23,10 @@
 
 #include <QDBusConnection>
 
+#include <CommHistory/event.h>
+#include <CommHistory/eventmodel.h>
+#include <CommHistory/commonutils.h>
+
 #include <filterservice_proxy.h>
 #include <filter.h>
 
@@ -46,6 +50,34 @@ FilterHandler::~FilterHandler()
 void FilterHandler::onFilterRequest(uint id, const QDBusObjectPath &modemPath,
                                     const QString &incomingNumber)
 {
-    qDebug() << "filter request" << id << modemPath.path() << incomingNumber;
-    m_interface->filter(id, m_filter->evaluate(incomingNumber));
+    VoiceCallFilter::Action action = m_filter->evaluate(incomingNumber);
+    qDebug() << "filter request" << id << modemPath.path() << incomingNumber << action;
+
+    // We need to answer as soon as possible.
+    m_interface->filter(id, action);
+
+    if (action != VoiceCallFilter::Continue) {
+        CommHistory::Event event;
+        event.setType(CommHistory::Event::CallEvent);
+        event.setStartTime(QDateTime::currentDateTime());
+        event.setEndTime(event.startTime());
+        event.setDirection(CommHistory::Event::Inbound);
+        event.setLocalUid(CommHistory::RING_ACCOUNT + modemPath.path());
+        event.setRecipients(CommHistory::Recipient(event.localUid(), incomingNumber));
+        switch (action) {
+        case VoiceCallFilter::Ignore:
+            event.setFilterType(CommHistory::Event::Ignored);
+            break;
+        case VoiceCallFilter::Block:
+            event.setFilterType(CommHistory::Event::Blocked);
+            break;
+        default:
+            break;
+        }
+
+        CommHistory::EventModel model;
+        if (!model.addEvent(event)) {
+            qWarning() << "Failed to save filtered call event." << event.toString();
+        }
+    }
 }

@@ -1,5 +1,5 @@
 Name: sailfish-voicecall-filter
-Version: 0.1.1
+Version: 0.2
 Release: 1
 Summary: a voicecall filter plugin for Sailfish OS
 License: GPLv2
@@ -12,6 +12,7 @@ BuildRequires: pkgconfig(ofono)
 BuildRequires: pkgconfig(mlite5)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(commhistory-qt5) >= 1.12.3
 BuildRequires: cmake
 
 %description
